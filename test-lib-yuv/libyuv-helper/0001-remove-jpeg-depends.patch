@@ -1,0 +1,61 @@
+From 4b5d8689ec681938e26648d8321dd2fbc2d3dc5a Mon Sep 17 00:00:00 2001
+From: Mario Tao <mario@hesaitech.com>
+Date: Thu, 3 Dec 2020 17:40:08 +0800
+Subject: [PATCH] remove jpeg depends
+
+---
+ CMakeLists.txt | 26 +++++++++++++-------------
+ 1 file changed, 13 insertions(+), 13 deletions(-)
+
+diff --git a/CMakeLists.txt b/CMakeLists.txt
+index ed4948f0..db457ac8 100644
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -26,21 +26,21 @@ INCLUDE_DIRECTORIES( BEFORE ${ly_inc_dir} )
+ ADD_LIBRARY				( ${ly_lib_static} STATIC ${ly_source_files} )
+ 
+ # this creates the shared library (.so)
+-ADD_LIBRARY				( ${ly_lib_shared} SHARED ${ly_source_files} )
+-SET_TARGET_PROPERTIES	( ${ly_lib_shared} PROPERTIES OUTPUT_NAME "${ly_lib_name}" )
+-SET_TARGET_PROPERTIES	( ${ly_lib_shared} PROPERTIES PREFIX "lib" )
++#ADD_LIBRARY				( ${ly_lib_shared} SHARED ${ly_source_files} )
++#SET_TARGET_PROPERTIES	( ${ly_lib_shared} PROPERTIES OUTPUT_NAME "${ly_lib_name}" )
++#SET_TARGET_PROPERTIES	( ${ly_lib_shared} PROPERTIES PREFIX "lib" )
+ 
+ # this creates the conversion tool
+-ADD_EXECUTABLE			( yuvconvert ${ly_base_dir}/util/yuvconvert.cc )
+-TARGET_LINK_LIBRARIES	( yuvconvert ${ly_lib_static} )
++#ADD_EXECUTABLE			( yuvconvert ${ly_base_dir}/util/yuvconvert.cc )
++#TARGET_LINK_LIBRARIES	( yuvconvert ${ly_lib_static} )
+ 
+ 
+-INCLUDE ( FindJPEG )
+-if (JPEG_FOUND)
+-  include_directories( ${JPEG_INCLUDE_DIR} )
+-  target_link_libraries( yuvconvert ${JPEG_LIBRARY} )
+-  add_definitions( -DHAVE_JPEG )
+-endif()
++#INCLUDE ( FindJPEG )
++#if (JPEG_FOUND)
++#  include_directories( ${JPEG_INCLUDE_DIR} )
++#  target_link_libraries( yuvconvert ${JPEG_LIBRARY} )
++#  add_definitions( -DHAVE_JPEG )
++#endif()
+ 
+ if(TEST)
+   find_library(GTEST_LIBRARY gtest)
+@@ -81,9 +81,9 @@ endif()
+ 
+ 
+ # install the conversion tool, .so, .a, and all the header files
+-INSTALL ( PROGRAMS ${CMAKE_BINARY_DIR}/yuvconvert			DESTINATION bin )
++#INSTALL ( PROGRAMS ${CMAKE_BINARY_DIR}/yuvconvert			DESTINATION bin )
+ INSTALL ( TARGETS ${ly_lib_static}						DESTINATION lib )
+-INSTALL ( TARGETS ${ly_lib_shared} LIBRARY				DESTINATION lib RUNTIME DESTINATION bin )
++#INSTALL ( TARGETS ${ly_lib_shared} LIBRARY				DESTINATION lib RUNTIME DESTINATION bin )
+ INSTALL ( DIRECTORY ${PROJECT_SOURCE_DIR}/include/		DESTINATION include )
+ 
+ # create the .deb and .rpm packages using cpack
+-- 
+2.29.2
+

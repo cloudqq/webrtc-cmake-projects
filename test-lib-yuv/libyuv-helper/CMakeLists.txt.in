@@ -1,0 +1,21 @@
+cmake_minimum_required(VERSION 3.17)
+
+project(libyuv-download NONE)
+
+include(ExternalProject)
+ExternalProject_Add(libyuv-download
+  GIT_REPOSITORY    https://chromium.googlesource.com/libyuv/libyuv
+  GIT_TAG           master
+  SOURCE_DIR        "${CMAKE_CURRENT_BINARY_DIR}/libyuv-src"
+  BINARY_DIR        "${CMAKE_CURRENT_BINARY_DIR}/libyuv-build"
+  #INSTALL_DIR       "${CMAKE_CURRENT_BINARY_DIR}/myinstall"
+  CONFIGURE_COMMAND ""
+  PATCH_COMMAND patch -p1 < ${CMAKE_CURRENT_SOURCE_DIR}/0001-remove-jpeg-depends.patch
+  CMAKE_CACHE_ARGS
+    -DTEST:BOOL=OFF
+  #CMAKE_ARGS        -DHAVE_JPEG=OFF
+  BUILD_COMMAND     cmake -S<SOURCE_DIR>  -DCMAKE_INSTALL_PREFIX=<BINARY_DIR>/third_party
+  #BUILD_IN_SOURCE   1
+  INSTALL_COMMAND   make install
+  TEST_COMMAND      ""
+)
